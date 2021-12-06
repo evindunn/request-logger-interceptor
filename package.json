@@ -1,6 +1,6 @@
 {
   "name": "@evindunn/request-logger-interceptor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A request logger for NestJS",
   "author": "Evin Dunn <evindunn14@gmail.com>",
   "repository": "https://github.com/evindunn/request-logger-interceptor",
@@ -9,6 +9,7 @@
   "files": ["dist/"],
   "types": "dist/request-logger.interceptor.d.ts",
   "scripts": {
+    "prepublish": "npm run build",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
