@@ -1,6 +1,6 @@
 {
   "name": "@evindunn/request-logger-interceptor",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A request logger for NestJS",
   "author": "Evin Dunn <evindunn14@gmail.com>",
   "repository": {
@@ -12,6 +12,7 @@
   "files": [
     "dist/"
   ],
+  "main": "dist/index.ts",
   "types": "dist/request-logger.interceptor.d.ts",
   "scripts": {
     "prepare": "npm run build",
