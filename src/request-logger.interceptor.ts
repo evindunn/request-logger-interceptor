@@ -35,13 +35,13 @@ export class RequestLoggerInterceptor implements NestInterceptor {
 
             this.logger.log(
                 format(
-                    '%s "%s" - %s %s %d %d - %d ms',
+                    '%s "%s" - %s %s %d %s - %dms',
                     client,
                     userAgent,
                     method,
                     route,
                     status,
-                    Number.isNaN(parseInt(contentLength)) ? '-' : contentLength,
+                    Number.isNaN(contentLength) ? '-' : contentLength,
                     responseTime,
                 ),
             );
