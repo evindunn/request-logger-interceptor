@@ -5,7 +5,7 @@ A request logger interceptor for NestJS
 ## Installation
 
 ```bash
-$ npm install
+$ npm install @evindunn/request-logger-interceptor
 ```
 
 ## Building

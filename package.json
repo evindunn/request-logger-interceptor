@@ -1,8 +1,9 @@
 {
-  "name": "request-logger-interceptor",
+  "name": "@evindunn/request-logger-interceptor",
   "version": "0.0.1",
   "description": "A request logger for NestJS",
   "author": "Evin Dunn <evindunn14@gmail.com>",
+  "repository": "https://github.com/evindunn/request-logger-interceptor",
   "private": false,
   "license": "MIT",
   "files": ["dist/"],
