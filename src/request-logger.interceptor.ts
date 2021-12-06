@@ -41,7 +41,7 @@ export class RequestLoggerInterceptor implements NestInterceptor {
                     method,
                     route,
                     status,
-                    isNaN(parseInt(contentLength)) ? '-' : contentLength,
+                    Number.isNaN(parseInt(contentLength)) ? '-' : contentLength,
                     responseTime,
                 ),
             );
