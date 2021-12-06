@@ -31,17 +31,17 @@ export class RequestLoggerInterceptor implements NestInterceptor {
         res.on('finish', () => {
             const responseTime = Date.now() - responseStart;
             const status = res.statusCode;
-            const contentLength = parseInt(res.get('content-length') || '-');
+            const contentLength = res.get('content-length');
 
             this.logger.log(
                 format(
-                    '%s %s - %s %s %d %d - %d ms',
+                    '%s "%s" - %s %s %d %d - %d ms',
                     client,
                     userAgent,
                     method,
                     route,
                     status,
-                    contentLength,
+                    isNaN(parseInt(contentLength)) ? '-' : contentLength,
                     responseTime,
                 ),
             );
