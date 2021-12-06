@@ -1,6 +1,6 @@
 {
   "name": "@evindunn/request-logger-interceptor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A request logger for NestJS",
   "author": "Evin Dunn <evindunn14@gmail.com>",
   "repository": {
@@ -9,7 +9,9 @@
   },
   "private": false,
   "license": "MIT",
-  "files": ["dist/"],
+  "files": [
+    "dist/"
+  ],
   "types": "dist/request-logger.interceptor.d.ts",
   "scripts": {
     "prepublish": "npm run build",
@@ -27,12 +29,12 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
-    "@nestjs/common": "^7.6.15",
-    "@nestjs/core": "^7.6.15",
-    "@nestjs/platform-express": "^7.6.15",
+    "@nestjs/common": "^7.6.18",
+    "@nestjs/core": "^7.6.18",
+    "@nestjs/platform-express": "^7.6.18",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.6.6"
+    "rxjs": "^7.4.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.6.0",
