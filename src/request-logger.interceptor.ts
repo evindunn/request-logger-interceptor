@@ -31,7 +31,7 @@ export class RequestLoggerInterceptor implements NestInterceptor {
         res.on('finish', () => {
             const responseTime = Date.now() - responseStart;
             const status = res.statusCode;
-            const contentLength = res.get('content-length') || '0';
+            const contentLength = res.get('content-length');
 
             this.logger.log(
                 format(
@@ -41,7 +41,7 @@ export class RequestLoggerInterceptor implements NestInterceptor {
                     method,
                     route,
                     status,
-                    contentLength,
+                    contentLength === undefined ? '0' : contentLength,
                     responseTime,
                 ),
             );
