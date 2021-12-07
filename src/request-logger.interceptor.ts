@@ -26,7 +26,7 @@ export class RequestLoggerInterceptor implements NestInterceptor {
         const method = req.method;
         const route = decodeURIComponent(req.originalUrl);
         const responseStart = Date.now();
-        const userAgent = req.get('user-agent') || "''";
+        const userAgent = req.get('user-agent') || '';
 
         res.on('finish', () => {
             const responseTime = Date.now() - responseStart;

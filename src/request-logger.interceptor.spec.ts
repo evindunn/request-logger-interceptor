@@ -6,9 +6,10 @@ const testRequest = {
     ip: '127.0.0.1',
     method: 'GET',
     originalUrl: '/',
+    _userAgent: 'Firefox',
     get(key: string): string | undefined {
         if (key === 'user-agent') {
-            return 'Firefox';
+            return this._userAgent;
         }
         return undefined;
     },
@@ -50,6 +51,16 @@ const testNext = {
     },
 };
 
+function getLogStrExpected(undefineUserAgent = false, undefineContentLength = false): RegExp {
+    const userAgent = undefineUserAgent ? '' : testRequest.get('user-agent');
+    const contentLength = undefineContentLength ? 0 : testResponse.get('content-length');
+
+    let logStrTarget = `${ testRequest.ip } "${userAgent}" - `;
+    logStrTarget += `${testRequest.method} ${decodeURIComponent(testRequest.originalUrl)} `;
+    logStrTarget += `${testResponse.statusCode} ${contentLength}`;
+    return new RegExp(`${logStrTarget} - \\d+ms`);
+}
+
 describe('LoggerInterceptor', () => {
     it('should be defined', () => {
         expect(new RequestLoggerInterceptor()).toBeDefined();
@@ -57,24 +68,30 @@ describe('LoggerInterceptor', () => {
 
     it('should format correctly', () => {
         jest.spyOn(Logger.prototype, 'log').mockImplementation((logStr) => {
-            let logStrTarget = `${ testRequest.ip } "${testRequest.get('user-agent')}" - `;
-            logStrTarget += `${testRequest.method} ${decodeURIComponent(testRequest.originalUrl)} `;
-            logStrTarget += `${testResponse.statusCode} ${testResponse.get('content-length')}`
-            const logStrRegexp = new RegExp(`${logStrTarget}(.*)`);
-            expect(logStr).toMatch(logStrRegexp);
+            expect(logStr).toMatch(getLogStrExpected());
         });
 
         const logger = new RequestLoggerInterceptor();
         logger.intercept(testContext as any, testNext);
     });
 
-    it('should not have NaN for Content-Length', function () {
+    it('should handle a blank User-Agent properly', () => {
         jest.spyOn(Logger.prototype, 'log').mockImplementation((logStr) => {
-            let logStrTarget = `${ testRequest.ip } "${testRequest.get('user-agent')}" - `;
-            logStrTarget += `${testRequest.method} ${decodeURIComponent(testRequest.originalUrl)} `;
-            logStrTarget += `${testResponse.statusCode} 0`;
-            const logStrRegexp = new RegExp(`${logStrTarget}(.*)`);
-            expect(logStr).toMatch(logStrRegexp);
+            expect(logStr).toMatch(getLogStrExpected(true));
+        });
+
+        const origUserAgent = testRequest._userAgent;
+
+        testRequest._userAgent = undefined;
+        const logger = new RequestLoggerInterceptor();
+        logger.intercept(testContext as any, testNext);
+
+        testRequest._userAgent = origUserAgent;
+    });
+
+    it('should handle a blank Content-Length correctly', function () {
+        jest.spyOn(Logger.prototype, 'log').mockImplementation((logStr) => {
+            expect(logStr).toMatch(getLogStrExpected(false, true));
         });
 
         const origContentLength = testResponse._contentLength;
